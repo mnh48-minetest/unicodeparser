@@ -1,0 +1,1 @@
+This client mod adds enable you to paste unicode escapes as real unicode into chat.
