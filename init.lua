@@ -19,16 +19,7 @@ written by (C) 2018 muhdnurhidayat (MNH48.com) and contributors
 -- Load support for intllib.
 --local S, NS = dofile("/intllib.lua")
 
---[[
-minetest.register_chatcommand("ut", {
-	params = "",
-	description = S("Unicode Text : Paste the unicode escape after the command, then enter to make it send in chat."),
-	func = function(esccde)
-		term = "return "..esccde
-		return pcall(loadstring(esccde))
-	end,
-})
---]]
+local texttemp = ""
 
 minetest.register_chatcommand("ug", {
 	--description = S("Open the GUI to paste unicode escape, then press \"Say\" to send in chat."),
@@ -41,13 +32,25 @@ minetest.register_chatcommand("ug", {
     end
 })
 
+minetest.register_chatcommand("uc", {
+	params = "<escapecode>",
+	description = "Directly convert and send out converted unicode escape.",
+	func = function(param)
+		texttemp = string.gsub(param, "\\u", "\\0x")
+        sendForProcess(texttemp)
+	end
+})
+
 minetest.register_on_formspec_input(function(formname, fields)
     if formname ~= "unicodeparser:upgui" then
         return false
     end
-	
-    local texttemp = string.gsub(fields.text, "\\u", "\\0x")
-	local allinput=half(texttemp,"\\")
+    texttemp = string.gsub(fields.text, "\\u", "\\0x")
+    sendForProcess(texttemp)
+end)
+
+function sendForProcess(texts)
+  local allinput=half(texts,"\\")
 	
 	local toProcess = {}
 	if allinput == nil then
@@ -61,7 +64,7 @@ minetest.register_on_formspec_input(function(formname, fields)
 	  minetest.send_chat_message(finalOut)
       return true
 	end
-end)
+end
 
 function half(inStr, inToken)
    if inStr == nil then
