@@ -40,9 +40,11 @@ To use CLI then send `.uc` followed by the unicode codepoint you want to convert
 ## CSM in action
 
 GUI version and as workaround of IME:
+
 ![GUI In Action](/images/inaction.gif?raw=true "GUI In Action")
 
 CLI version and as workaround of paste problem:
+
 ![CLI In Action](/images/cli.gif?raw=true "CLI In Action")
 
 ## To do
