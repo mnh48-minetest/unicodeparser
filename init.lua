@@ -46,7 +46,8 @@ minetest.register_on_formspec_input(function(formname, fields)
         return false
     end
 	
-	local allinput=half(fields.text,"\\")
+    local texttemp = string.gsub(fields.text, "\\u", "\\0x")
+	local allinput=half(texttemp,"\\")
 	
 	local toProcess = {}
 	if allinput == nil then
