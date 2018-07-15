@@ -1,5 +1,6 @@
 ---
 title: Unicode Parser
+description: Unicode Parser is a client-side mod for Minetest by muhdnurhidayat.
 lang: en
 layout: default
 ---
