@@ -62,12 +62,13 @@ CLI version and as workaround of paste problem:
 
 (C) muhdnurhidayat (MNH48.com) and contributors
 
-Licensed under The MIT License.
+Licensed under The MIT License, see [LICENSE.txt](/LICENSE.txt "The MIT License").
 
 
 ## Changelog
 
 ### v1.2
+
 - The tool now convert the codepoint when you press enter after writing the text, so you don't need to click the button "Convert" anymore, but the button is still there for compatibility reasons.
 - The tool now copies the converted codepoint to your clipboard when ypu enter or press the "Convert" button, so you don't need to manually copy (Ctrl-C) anymore.
 - Added link to GitHub at the tool.
@@ -78,14 +79,17 @@ Licensed under The MIT License.
   - `Fidoze#7037` (`Anime Trending` Discord server)
   - `Aqo#5414` (`A.I. Channel Unofficial` Discord server)
   - `xnamkcor#3740` (`A.I. Channel Unofficial` Discord server)
+  
 (Note: I purposely ask people not from Minetest community to test it because I don't want biased feedback.) 
 
 
 ### v1.1
+
 - Added support for `\uXXXX` unicode escape in addition to the existing `\0xXXXX` unicode sequence.
 - Added command `.uc` for command line interface, this means those who don't want to use the GUI can now straight away write the unicode escape in chat.
 - Updated `README` to reflect the changes.
 
 
 ### v1.0
+
 - The original initial release.
