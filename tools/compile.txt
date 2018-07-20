@@ -1,0 +1,3 @@
+To make exe from pyw, run this.
+
+pyinstaller --icon unip.ico --add-data "unip.ico;." --noconsole --name "Unicode Converter" --onefile UnicodeConverter.pyw

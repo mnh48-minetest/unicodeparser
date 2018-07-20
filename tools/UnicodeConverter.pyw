@@ -2,6 +2,7 @@ from Tkinter import Tk, StringVar
 import tkMessageBox
 import ttk
 from Tkinter import *
+import os
 
 ## THIS PYTHON CODE IS WRITTEN IN PYTHON 2.7.12, PLEASE CONVERT IT TO PYTHON 3 USING ONLINE CONVERTER FIRST IF YOU'RE
 ## USING PYTHON 3.x BECAUSE A LOT OF LIBRARY HAS BEEN CHANGED SINCE PYTHON 3 CAME OUT. THANK YOU. -warned by Hidayat-
@@ -19,6 +20,12 @@ coory = (screenheight/2) - (winheight/2)                        ## Calculate y-c
 root.title("UTF-8 Codepoint Converter")                         ## Declare main title
 root.geometry('%dx%d+%d+%d' % (winwidth,winheight,coorx,coory)) ## Ask python to display window at specified size and position
 root.configure(background='grey')                               ## Declare main background
+datafile = "unip.ico"                                           ## Declare icon file
+if not hasattr(sys, "frozen"):                                  ## Check if not running from exe
+    datafile = os.path.join(os.path.dirname(__file__), datafile)## Use icon file reside in same directory as script
+else:                                                           ## But if it is running from exe
+    datafile = os.path.join(sys.prefix, datafile)               ## Use icon file from the temporary system directory
+root.iconbitmap(default=datafile)                               ## Declare the small icon shown on window
 
 ##[1]---------------Declare the frames inside container
 TopMainFrame = Frame(root, width=450, height=7, bg="grey", bd=8)
@@ -34,17 +41,20 @@ resultvalue = StringVar()       ## Store result of converted codepoint
 #### -- (2) DEFINITIONS -- ####
 ##[2]---------------Define convert resultvalue function
 def conUnicode():
-    tempvalue = " "
+    tempvalue = ""                                   
     for i, c in enumerate(convertvalue.get()):
         tempvalue = tempvalue+"\\" + str(hex(ord(c)))
     resultvalue.set(tempvalue)
+    root.clipboard_clear()
+    root.clipboard_append(tempvalue)
 
 ##[2]---------------Define what to do for info button action
 def ShowInfo():
     tkMessageBox.showinfo("UTF-8 Codepoint Converter","Unicode UTF-8 Codepoint Converter\n"+
                           "Intended to use with the Minetest client-side mod \"UnicodeParser\"\n\n"+
-                          "Python script is\n(C) 2018 muhdnurhidayat (MNH48.com) and contributors\n"+
-						  "Available under The MIT License.\n")
+                          "Python script (C) 2018 muhdnurhidayat (MNH48.com) and contributors\n"+
+						  "Available under The MIT License.\n"+
+                          "https://github.com/MuhdNurHidayat/unicodeparser\n")
 
 ##[2]---------------Define what to do for exit button action
 def AskExit():
@@ -55,8 +65,8 @@ def AskExit():
 
 ##[2]---------------Define what to do for reset button action
 def Reset():
-    convertvalue.set(" ")
-    resultvalue.set(" ")
+    convertvalue.set("")
+    resultvalue.set("")
 
 #### -- (3) MAIN CLASS OF THE PROGRAM -- ####
 ##[3]---------------Put buttons into top frames
@@ -88,6 +98,9 @@ lblOut.grid(row=1,column=0)
 ##[3]---------------Put the converted output text into the center frame
 EntOutput = Entry(CenterMainFrame,font=('arial',10,'bold'), textvariable=resultvalue, bd=1, fg="orange", width=50, justify='center', state='readonly', exportselection='true')
 EntOutput.grid(row=1,column=1)
+
+##[3]---------------Bind 'enter' key to convert as well
+EntInput.bind("<Return>", (lambda event: conUnicode()))
 
 ##[3]---------------Make sure program GUI continues to run unless exited
 root.mainloop()
