@@ -15,7 +15,7 @@ It allows you write unicode codepoint in either \uXXXX format or \0xXXXX format
 then it will convert to real text string of that codepoint and send it out on
 public chat. Both GUI and CLI now available.
 
-![The GUI](/images/thegui.png?raw=true "The GUI")
+![The GUI](images/thegui.png?raw=true "The GUI")
 
 
 ## Intended use
@@ -54,11 +54,11 @@ To use CLI then send `.uc` followed by the unicode codepoint you want to convert
 
 GUI version and as workaround of IME:
 
-![GUI In Action](/images/inaction.gif?raw=true "GUI In Action")
+![GUI In Action](images/inaction.gif?raw=true "GUI In Action")
 
 CLI version and as workaround of paste problem:
 
-![CLI In Action](/images/cli.gif?raw=true "CLI In Action")
+![CLI In Action](images/cli.gif?raw=true "CLI In Action")
 
 
 ## To do
@@ -70,7 +70,7 @@ CLI version and as workaround of paste problem:
 
 (C) muhdnurhidayat (MNH48.com) and contributors
 
-Licensed under The MIT License, see [LICENSE.txt](/LICENSE.txt "The MIT License").
+Licensed under The MIT License, see [LICENSE.txt](LICENSE.txt "The MIT License").
 
 
 ## Changelog
