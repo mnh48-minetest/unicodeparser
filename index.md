@@ -1,6 +1,6 @@
 ---
 title: Unicode Parser
-description: Unicode Parser is a client-side mod for Minetest by muhdnurhidayat.
+description: Unicode Parser is a client-side mod for Minetest by muhdnurhidayat, it's temporary solution to chat in unicode characters.
 lang: en
 layout: default
 ---
