@@ -25,7 +25,10 @@ if not hasattr(sys, "frozen"):                                  ## Check if not 
     datafile = os.path.join(os.path.dirname(__file__), datafile)## Use icon file reside in same directory as script
 else:                                                           ## But if it is running from exe
     datafile = os.path.join(sys.prefix, datafile)               ## Use icon file from the temporary system directory
-root.iconbitmap(default=datafile)                               ## Declare the small icon shown on window
+try:
+    root.iconbitmap(default=datafile)                               ## Declare the small icon shown on window
+except:
+    pass
 
 ##[1]---------------Declare the frames inside container
 TopMainFrame = Frame(root, width=450, height=7, bg="grey", bd=8)
