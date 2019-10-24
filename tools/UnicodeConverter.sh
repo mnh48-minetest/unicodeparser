@@ -1,5 +1,5 @@
 #!/bin/bash
-_verinfo="UnicodeConverter.sh 1.0
+_verinfo="UnicodeConverter.sh 1.1
 Copyright (C) 2019 Hagb and contributors
 released under The MIT License"
 _T=120
@@ -67,63 +67,62 @@ done
 
 ## Check options
 as_delay() {
-	if [ -n "`echo -En "$1" | sed 's/[0-9]//g'`" -o -z "$1" ] ;then
-		echo -E "$1" is not a vaild DELAY. >&2
-		echo -E "$_help" >&2
+	if [ -n "$( printf '%s\n' "$1" | sed 's/[0-9]//g')" -o -z "$1" ] ;then
+		printf '%s\n' "$1 is not a vaild DELAY." >&2
+		echo "$_help" >&2
 		exit 1
 	fi
 }
-as_delay $_T
-as_delay $_t
-as_delay $_d
+as_delay "$_T"
+as_delay "$_t"
+as_delay "$_d"
 if [ "$_mode" != "1" -a "$_mode" != "1.5" -a "$_mode" != "2" -a "$_mode" != "3" -a "$_mode" != "4" ] ;then
-	echo -E "$_mode" is not a vaild MODE. >&2
-	echo -E "$_help" >&2
+	printf '%s\n' "$_mode is not a vaild MODE." >&2
+	echo "$_help" >&2
 	exit 1
 fi
 if [ "$_h" != "1" -a "$_h" != "2" ] ;then
-	echo -E "$_h" is not a vaild HOW value. >&2
-	echo -E "$_help" >&2
+	printf '%s\n' "$_h is not a vaild HOW value." >&2
+	echo "$_help" >&2
 	exit 1
 fi
 
 ## Do what should be done
-if [ "$_h" == 2 ];then _key=""; fi
+[ "$_h" == 2 ] && _key=""
 ### If -s option isn't used, then use an input box to get text
-if [ $_s = "0" ];then _text="`zenity --entry --text 'Input' --title 'Unicode Codepoint Converter'`"; fi
+[ "$_s" = "0" ] && _text="$(zenity --entry --text 'Input' --title 'Unicode Codepoint Converter')"
 ### If text is null, then stop
-if [ -z "$_text" ];then exit 0; fi
+[ -z "$_text" ] && exit 0
 ### Transform from original text
-_output=".uc `( ( echo -nE $_text) | iconv -t utf-16LE) | busybox hexdump -v -e '/2 "\u%04x"' `"
+_output=".uc $( printf %s "$_text" | iconv -t utf-16LE | busybox hexdump -v -e '/2 "\u%04x"' )"
 ### Delay (about -T option)
-busybox usleep ${_T}000
+busybox usleep "${_T}000"
+backupClip() { _oldclip="$(xclip -o -selection clipboard ; echo x )" ; }
+restoreClip() { printf "%s" "${_oldclip%?}" | xclip -i -selection clipboard ; }
 ### Output text transformed
-case $_mode in
+case "$_mode" in
 	1)
-		#### Backup clipboard
-		_oldclip="`xclip -o -selection clipboard`"
+		backupClip
 		#### Push text transformed to clipboard
 		echo -nE "$_output" | xclip -i -selection clipboard
 		#### Send keystrokes
-		xdotool key --clearmodifiers --delay $_t $_key ctrl+v ctrl+v Return 
-		#### Restore clipboard
-		echo -nE "$_oldclip" | xclip -i -selection clipboard
+		xdotool key --clearmodifiers --delay "$_t" "$_key" ctrl+v ctrl+v Return
+		restoreClip
 	;;
 	1.5)
-		_oldclip="`xclip -o -selection clipboard`"
+		backupClip
 		echo -nE "$_output" | xclip -i -selection clipboard
-		xdotool key --clearmodifiers --delay $_t $_key ctrl+v Return
-		echo -nE "$_oldclip" | xclip -i -selection clipboard
+		xdotool key --clearmodifiers --delay "$_t" "$_key" ctrl+v Return
+		restoreClip
 	;;
 	2)
-		xdotool key --clearmodifiers $_key
-		busybox usleep ${_t}000
+		xdotool key --clearmodifiers "$_key"
+		busybox usleep "${_t}000"
 		xdotool type --clearmodifiers "$_output"
-		busybox usleep ${_t}000
+		busybox usleep "${_t}000"
 		xdotool key --clearmodifiers Return
 	;;
 	3)
-		_oldclip="`xclip -o -selection clipboard`"
 		echo -nE "$_output" | xclip -i -selection clipboard
 	;;
 	4)
